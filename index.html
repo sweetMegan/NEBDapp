@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
-<div onclick="clickAction()">
-    按我
+<div style="height: 40px; width: 100px;text-align: center;line-height: 40px;border-radius: 20px; background: red ;color:white;">
+    新建账户
 </div>
 <script type="text/javascript" src="dist/nebulas.js"></script>
 <script type="text/javascript">
@@ -16,13 +17,12 @@
     var Account = require("nebulas").Account;
     var Transaction = require("nebulas").Transaction;
     var Unit = require("nebulas").Unit;
+
     var neb = new Neb();
     //设置星云节点 这里设置为星云测试节点
     neb.setRequest(new HttpRequest("https://testnet.nebulas.io"));
     var account;
     function clickAction(e) {
-        console.log(123);
-        console.log(e);
         //创建一个账户
         account = Account.NewAccount();
         console.log(account.getAddressString());
