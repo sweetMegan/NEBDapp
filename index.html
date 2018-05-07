@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div >
+    <div style="height: 40px;font-size: 14px; width: 100px;text-align: center;line-height: 40px;border-radius: 20px; background: red ;color:white"
+         onclick="clickAction()">
+        无参数printTest
+    </div>
+</div>
+<div style="display: flex;margin-top: 40px">
+    <div style="margin-left: 10px">
+        arg1:<input style="height: 40px;font-size: 14px; width: 100px;" type="text" id="arg1" >
+    </div>
+    <div style="margin-left: 10px">
+        arg2:<input style="height: 40px;font-size: 14px; width: 100px;" type="text" id="arg2" >
+    </div>
+    <div style="height: 40px;font-size: 14px; width: 100px;text-align: center;line-height: 40px;border-radius: 20px; background: red ;color:white"
+         onclick="clickAction2()">
+        求和sum
+    </div>
+</div>
+<div id="result" style="margin-top: 40px">
+    运行结果:
+</div>
+
+<!--导入与包-->
+<script src=lib/jquery-3.3.1.min.js></script>
+<script src=lib/nebPay.js></script>
+<script src=lib/bootstrap-4.0.0-dist/js/bootstrap.min.js></script>
+<script type="text/javascript">
+    var NebPay = require("nebpay");
+    var nebPay = new NebPay();
+    //要调用的合约地址
+    var dappAddress = "n1jb79jgi44ukKhcs2h6PPZTvZqQASKV6T7";
+    var to = dappAddress;
+    var value = "0";
+    function clickAction(e) {
+        //要到用的合约方法
+        var callFunction = "printTest";
+        //执行合约方法
+        nebPay.simulateCall(to, value, callFunction, "", {
+            listener: parseResult      //指定回调函数
+        });
+    }
+    function clickAction2(e) {
+        //要到用的合约方法
+        var callFunction = "sum";
+        //字符串转json数组
+        var callArgs = "[\"" + $("#arg1").val() + "\",\"" +  $("#arg2").val() + "\"]"; //in the form of ["args"]
+        console.log(callArgs);
+        //执行合约方法
+        nebPay.simulateCall(to, value, callFunction, callArgs, {
+            listener: parseResult      //指定回调函数
+        });
+    }
+
+    function parseResult(res) {
+        var result = res.result;
+        console.log(result);
+        $("#result").text("运行结果:"+result)
+    }
+</script>
+</body>
+</html>
